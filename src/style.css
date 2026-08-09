@@ -1,0 +1,1710 @@
+/* SciMath Visual Studio Style system */
+:root {
+    --bg-dark: #070712;
+    --bg-sidebar: #0b0c16;
+    --panel-bg: rgba(20, 21, 38, 0.55);
+    --panel-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    /* Neon Palettes */
+    --clr-dashboard: #3b82f6;
+    --clr-math: #00e5ff;
+    --clr-math-glow: rgba(0, 229, 255, 0.4);
+    --clr-physics: #bd00ff;
+    --clr-physics-glow: rgba(189, 0, 255, 0.4);
+    --clr-chemistry: #00ff88;
+    --clr-chemistry-glow: rgba(0, 255, 136, 0.4);
+    --clr-accent: #f59e0b;
+
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --font-ui: 'Outfit', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    width: 280px;
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid var(--panel-border);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.brand-logo {
+    color: var(--clr-dashboard);
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+    animation: rotateAtom 20s linear infinite;
+}
+
+@keyframes rotateAtom {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.brand-name h1 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-name span {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.nav-section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin: 20px 0 10px 12px;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 12px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleX(0);
+    height: 60%;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+    transition: var(--transition-fast);
+    transform-origin: left;
+}
+
+.nav-item:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.nav-icon {
+    width: 18px;
+    height: 18px;
+}
+
+/* Active buttons styling */
+.nav-item[data-tab="dashboard"].active {
+    color: var(--clr-dashboard);
+    background-color: rgba(59, 130, 246, 0.08);
+}
+
+.nav-item[data-tab="dashboard"].active::before {
+    background-color: var(--clr-dashboard);
+    transform: translateY(-50%) scaleX(1);
+}
+
+.nav-item[data-tab="math"].active {
+    color: var(--clr-math);
+    background-color: rgba(0, 229, 255, 0.08);
+    filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.15));
+}
+
+.nav-item[data-tab="math"].active::before {
+    background-color: var(--clr-math);
+    transform: translateY(-50%) scaleX(1);
+}
+
+.nav-item[data-tab="physics"].active {
+    color: var(--clr-physics);
+    background-color: rgba(189, 0, 255, 0.08);
+    filter: drop-shadow(0 0 4px rgba(189, 0, 255, 0.15));
+}
+
+.nav-item[data-tab="physics"].active::before {
+    background-color: var(--clr-physics);
+    transform: translateY(-50%) scaleX(1);
+}
+
+.nav-item[data-tab="chemistry"].active {
+    color: var(--clr-chemistry);
+    background-color: rgba(0, 255, 136, 0.08);
+    filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.15));
+}
+
+.nav-item[data-tab="chemistry"].active::before {
+    background-color: var(--clr-chemistry);
+    transform: translateY(-50%) scaleX(1);
+}
+
+.sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px solid var(--panel-border);
+    padding-top: 20px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.dot.green {
+    background-color: var(--clr-chemistry);
+    box-shadow: 0 0 8px var(--clr-chemistry);
+}
+
+.app-version {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Main Content styling */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    height: 100vh;
+    overflow-y: auto;
+    background: radial-gradient(circle at 80% 20%, rgba(20, 20, 45, 0.4) 0%, rgba(7, 7, 18, 0) 60%);
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--panel-border);
+    flex-shrink: 0;
+}
+
+.content-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.content-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition-fast);
+}
+
+.header-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.lang-selector-group {
+    display: flex;
+    align-items: center;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 0 10px;
+    gap: 6px;
+    transition: var(--transition-fast);
+}
+
+.lang-selector-group:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.header-select {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+.header-select option {
+    background: #0f1020;
+    color: var(--text-primary);
+}
+
+.clock-display {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--panel-border);
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+}
+
+/* Glassmorphism utility */
+.glass {
+    background: var(--panel-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Tabs system */
+.tab-pane {
+    display: none;
+    flex-grow: 1;
+    height: calc(100vh - 130px);
+    overflow-y: auto;
+}
+
+.tab-pane.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Dashboard View */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.dash-card {
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome-card {
+    grid-column: span 2;
+    background: linear-gradient(135deg, rgba(20, 24, 56, 0.9) 0%, rgba(13, 14, 28, 0.9) 100%);
+    position: relative;
+    min-height: 220px;
+}
+
+#dashboard-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.badge {
+    align-self: flex-start;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #acc8ff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.welcome-content h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+}
+
+.welcome-content p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.welcome-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+/* Button UI */
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--clr-dashboard);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-primary);
+}
+
+.btn-outline:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+}
+
+.btn-xs {
+    padding: 4px 8px;
+    font-size: 11px;
+    border-radius: 4px;
+}
+
+.btn-text {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.btn-text:hover {
+    color: var(--text-primary);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.button-row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Stats Card / Constants Drawer */
+.stats-card {
+    grid-column: span 1;
+}
+
+.stats-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.section-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
+.constants-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    overflow-y: auto;
+    flex-grow: 1;
+    max-height: 140px;
+}
+
+.constant-item {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.constant-item:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.const-symbol {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.08);
+}
+
+.const-name {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.const-value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Quote of the Day Card */
+.quote-card {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 20px 24px;
+    max-height: 100px;
+}
+
+.quote-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-grow: 1;
+}
+
+.quote-mark {
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--clr-dashboard);
+    opacity: 0.3;
+    line-height: 0;
+    transform: translateY(12px);
+}
+
+.quote-text {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-primary);
+}
+
+.quote-author {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-left: 8px;
+    white-space: nowrap;
+}
+
+.btn-next-quote {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Banner Cards */
+.banner-card {
+    grid-column: span 1;
+    min-height: 180px;
+    transition: var(--transition-normal);
+    cursor: pointer;
+}
+
+.banner-card:hover {
+    transform: translateY(-4px);
+}
+
+.banner-icon-bg {
+    font-size: 32px;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.banner-card h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.banner-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex-grow: 1;
+}
+
+.card-link {
+    font-size: 12px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-fast);
+}
+
+.math-banner-card {
+    border-bottom: 3px solid var(--clr-math);
+}
+
+.math-banner-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 229, 255, 0.15);
+    background: linear-gradient(180deg, var(--panel-bg) 70%, rgba(0, 229, 255, 0.05) 100%);
+}
+
+.math-banner-card .card-link {
+    color: var(--clr-math);
+}
+
+.physics-banner-card {
+    border-bottom: 3px solid var(--clr-physics);
+}
+
+.physics-banner-card:hover {
+    box-shadow: 0 8px 30px rgba(189, 0, 255, 0.15);
+    background: linear-gradient(180deg, var(--panel-bg) 70%, rgba(189, 0, 255, 0.05) 100%);
+}
+
+.physics-banner-card .card-link {
+    color: var(--clr-physics);
+}
+
+.chemistry-banner-card {
+    border-bottom: 3px solid var(--clr-chemistry);
+}
+
+.chemistry-banner-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 255, 136, 0.15);
+    background: linear-gradient(180deg, var(--panel-bg) 70%, rgba(0, 255, 136, 0.05) 100%);
+}
+
+.chemistry-banner-card .card-link {
+    color: var(--clr-chemistry);
+}
+
+
+/* Subtab Headers */
+.tab-tabs {
+    display: flex;
+    gap: 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--panel-border);
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.subtab-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: var(--transition-fast);
+}
+
+.subtab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.subtab-btn.active {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.subtab-pane {
+    display: none;
+    flex-grow: 1;
+    height: calc(100% - 60px);
+}
+
+.subtab-pane.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Workspace layout details */
+.workspace-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.canvas-container {
+    position: relative;
+    flex-grow: 1;
+    height: 100%;
+    background: #090915;
+    overflow: hidden;
+    min-height: 350px;
+}
+
+.canvas-container canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.canvas-indicator {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--panel-border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.canvas-overlay-text {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--panel-border);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+/* Math graph controls */
+.controls-panel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 100%;
+    overflow-y: auto;
+}
+
+.controls-panel h3 {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls-panel h3::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 14px;
+    border-radius: 2px;
+    transition: var(--transition-fast);
+}
+
+.dark-theme [data-tab="math"] .controls-panel h3::before {
+    background-color: var(--clr-math);
+    box-shadow: 0 0 8px var(--clr-math);
+}
+
+.dark-theme [data-tab="physics"] .controls-panel h3::before {
+    background-color: var(--clr-physics);
+    box-shadow: 0 0 8px var(--clr-physics);
+}
+
+.dark-theme [data-tab="chemistry"] .controls-panel h3::before {
+    background-color: var(--clr-chemistry);
+    box-shadow: 0 0 8px var(--clr-chemistry);
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.control-row {
+    display: flex;
+    gap: 12px;
+}
+
+.control-group.half {
+    width: 50%;
+}
+
+.control-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.control-group select,
+.control-group input[type="text"],
+.control-group input[type="number"] {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--panel-border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text-primary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    transition: var(--transition-fast);
+}
+
+.control-group input[type="number"] {
+    font-family: var(--font-mono);
+}
+
+.control-group select:focus,
+.control-group input[type="text"]:focus,
+.control-group input[type="number"]:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Custom sliders */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    outline: none;
+    margin: 10px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+/* Dynamic colors for sliders based on active category */
+.dark-theme [data-tab="math"] input[type="range"]::-webkit-slider-thumb {
+    background: var(--clr-math);
+    box-shadow: 0 0 10px var(--clr-math);
+}
+
+.dark-theme [data-tab="physics"] input[type="range"]::-webkit-slider-thumb {
+    background: var(--clr-physics);
+    box-shadow: 0 0 10px var(--clr-physics);
+}
+
+.dark-theme [data-tab="chemistry"] input[type="range"]::-webkit-slider-thumb {
+    background: var(--clr-chemistry);
+    box-shadow: 0 0 10px var(--clr-chemistry);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.panel-divider {
+    border: none;
+    border-top: 1px solid var(--panel-border);
+    margin: 8px 0;
+}
+
+/* Custom interactive Radio/Checkbox styling */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    transition: var(--transition-fast);
+}
+
+.radio-label:hover {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+}
+
+.radio-label input[type="radio"] {
+    margin: 0;
+    accent-color: var(--clr-math);
+}
+
+.math-sub-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(0, 229, 255, 0.02);
+    border: 1px solid rgba(0, 229, 255, 0.1);
+    border-radius: 10px;
+}
+
+.math-sub-controls h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--clr-math);
+}
+
+/* Calc outputs styling */
+.math-calc-output {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: auto;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.math-calc-output h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--panel-border);
+    padding-bottom: 4px;
+}
+
+#math-results-content {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.calc-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.calc-line .c-lbl {
+    color: var(--text-secondary);
+}
+
+.calc-line .c-val {
+    font-weight: bold;
+}
+
+.glow-txt {
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.validation-message {
+    color: #ef4444;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+/* Linear Algebra styling - Matrix input */
+.matrix-input-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+}
+
+.matrix-label {
+    font-family: var(--font-ui);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--text-secondary);
+}
+
+.matrix-grid-3x3 {
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    gap: 6px;
+}
+
+.matrix-grid-3x3 input {
+    width: 60px;
+    height: 40px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--panel-border);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-align: center;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.matrix-grid-3x3 input::-webkit-outer-spin-button,
+.matrix-grid-3x3 input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+.matrix-grid-3x3 input:focus {
+    outline: none;
+    border-color: var(--clr-math);
+    box-shadow: 0 0 6px rgba(0, 229, 255, 0.3);
+}
+
+.matrix-grid-3x3 input.dim-3-ghost {
+    opacity: 0.15;
+    pointer-events: none;
+}
+
+.toggle-group-inline {
+    display: flex;
+    gap: 6px;
+}
+
+.toggle-group-inline button {
+    flex-grow: 1;
+    padding: 8px;
+    font-size: 12px;
+}
+
+.toggle-group-inline button.active {
+    background: var(--clr-math);
+    color: #000;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+    border-color: var(--clr-math);
+}
+
+.preset-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.preset-buttons button {
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+.solutions-scroll {
+    max-height: 180px;
+    overflow-y: auto;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+}
+
+.solutions-scroll h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+#matrix-solutions-output {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--text-primary);
+}
+
+.matrix-sol-step {
+    border-left: 2px solid var(--clr-math);
+    padding-left: 8px;
+    margin-bottom: 8px;
+}
+
+.matrix-sol-highlight {
+    color: var(--clr-math);
+    font-weight: bold;
+}
+
+/* Physics project HUD overlays */
+.physics-hud {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 8px;
+    flex-flow: row wrap;
+    max-width: 80%;
+    pointer-events: none;
+}
+
+.hud-item {
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--panel-border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    gap: 6px;
+}
+
+.hud-item span:first-child {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.hud-item span:last-child {
+    color: var(--clr-physics);
+    font-family: var(--font-mono);
+    text-shadow: 0 0 6px rgba(189, 0, 255, 0.3);
+}
+
+.action-buttons-flex {
+    display: flex;
+    gap: 8px;
+}
+
+.action-buttons-flex button {
+    flex-grow: 1;
+}
+
+.physics-equations-panel {
+    background: rgba(189, 0, 255, 0.02);
+    border: 1px solid rgba(189, 0, 255, 0.08);
+}
+
+.physics-equations-panel h4 {
+    color: var(--clr-physics);
+}
+
+.math-formula-box {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.formula-line {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-primary);
+}
+
+.formula-line strong.glow-txt {
+    color: var(--clr-physics);
+}
+
+.physics-math-note {
+    font-size: 11px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* Pendulum HUD energy bars */
+.pendulum-hud {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 260px;
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 12px;
+    pointer-events: none;
+}
+
+.energy-graph {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.energy-bar-lbl {
+    font-size: 10px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.energy-bar-outer {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.energy-bar {
+    height: 100%;
+    width: 0;
+    transition: width 0.1s linear;
+}
+
+.ke-fill {
+    background: var(--clr-math);
+    box-shadow: 0 0 6px var(--clr-math);
+}
+
+.pe-fill {
+    background: var(--clr-physics);
+    box-shadow: 0 0 6px var(--clr-physics);
+}
+
+.total-fill {
+    background: var(--clr-accent);
+    box-shadow: 0 0 6px var(--clr-accent);
+}
+
+/* Chemistry Layout: Periodic + Bohr */
+.chemistry-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    height: calc(100vh - 200px);
+    min-height: 380px;
+}
+
+.periodic-table-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+}
+
+.periodic-selector-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.periodic-selector-row .lbl-info {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.filter-btn {
+    font-size: 10px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary) !important;
+    border-radius: 6px;
+    transition: var(--transition-fast);
+}
+
+.filter-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary) !important;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-btn.active {
+    background: var(--clr-chemistry) !important;
+    color: #000000 !important;
+    font-weight: 700;
+    border-color: var(--clr-chemistry) !important;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+}
+
+.periodic-grid {
+    display: grid;
+    grid-template-columns: repeat(18, minmax(0, 1fr));
+    grid-template-rows: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+    flex-grow: 1;
+    background: #04040a;
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    padding: 8px;
+    overflow-x: auto;
+}
+
+.element-cell {
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2px 4px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    position: relative;
+    user-select: none;
+}
+
+.element-cell:hover {
+    transform: scale(1.1);
+    z-index: 5;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.element-cell.active-sel {
+    border-color: var(--clr-chemistry) !important;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3) !important;
+    background: rgba(0, 255, 136, 0.08) !important;
+    z-index: 6;
+}
+
+.cell-num {
+    font-size: 7px;
+    font-family: var(--font-mono);
+    color: var(--text-secondary);
+}
+
+.cell-symbol {
+    font-size: 11px;
+    font-weight: 800;
+    align-self: center;
+}
+
+.cell-name {
+    font-size: 6px;
+    color: var(--text-muted);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Families colors */
+.bg-nonmetal {
+    background: rgba(59, 130, 246, 0.12);
+    border-color: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+}
+
+.bg-noble {
+    background: rgba(168, 85, 247, 0.12);
+    border-color: rgba(168, 85, 247, 0.15);
+    color: #d8b4fe;
+}
+
+.bg-alkali {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.15);
+    color: #fca5a5;
+}
+
+.bg-alkaline {
+    background: rgba(249, 115, 22, 0.12);
+    border-color: rgba(249, 115, 22, 0.15);
+    color: #fdba74;
+}
+
+.bg-metalloid {
+    background: rgba(234, 179, 8, 0.12);
+    border-color: rgba(234, 179, 8, 0.15);
+    color: #fde047;
+}
+
+.bg-halogen {
+    background: rgba(236, 72, 153, 0.12);
+    border-color: rgba(236, 72, 153, 0.15);
+    color: #fbcfe8;
+}
+
+.bg-transition {
+    background: rgba(100, 116, 139, 0.18);
+    border-color: rgba(100, 116, 139, 0.2);
+    color: #cbd5e1;
+}
+
+.bg-post-transition {
+    background: rgba(14, 165, 233, 0.12);
+    border-color: rgba(14, 165, 233, 0.15);
+    color: #7dd3fc;
+}
+
+.bg-lanact {
+    background: rgba(20, 184, 166, 0.12);
+    border-color: rgba(20, 184, 166, 0.15);
+    color: #99f6e4;
+}
+
+.element-cell.dimmed {
+    opacity: 0.15;
+    pointer-events: none;
+    transform: scale(0.95);
+}
+
+/* Chemistry Right pane */
+.element-details-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    background: rgba(15, 17, 30, 0.8);
+}
+
+.details-top {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.selected-element-badge {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--clr-chemistry);
+    background: rgba(0, 255, 136, 0.05);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.15);
+}
+
+.selected-element-badge .anumbr {
+    font-size: 9px;
+    font-family: var(--font-mono);
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    color: var(--text-secondary);
+}
+
+.selected-element-badge .symb {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.selected-text-meta h3 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.selected-text-meta .atomic-mass {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: block;
+    margin-top: 1px;
+}
+
+.element-group-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--clr-chemistry);
+    margin-top: 4px;
+    display: inline-block;
+}
+
+.bohr-visualizer-container {
+    background: #000;
+    border: 1px solid var(--panel-border);
+    border-radius: 12.5px;
+    height: 180px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.bohr-visualizer-container canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.bohr-indicator {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.element-properties-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.prop-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding-bottom: 6px;
+}
+
+.prop-item.desc-prop {
+    flex-direction: column;
+    gap: 4px;
+    border: none;
+}
+
+.prop-item .p-lbl {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.prop-item .p-val {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.prop-item.desc-prop .p-val {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-weight: normal;
+}
+
+/* Chemistry Balancer styling */
+.chemistry-balance-steps {
+    background: rgba(0, 255, 136, 0.01) !important;
+    border: 1px solid rgba(0, 255, 136, 0.08) !important;
+}
+
+.help-text {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.balancer-presets {
+    margin-top: 8px;
+}
+
+.balancer-presets label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 4px;
+}
+
+#balancer-results-output {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.chem-bal-success {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chem-final-eq {
+    background: rgba(0, 255, 136, 0.08);
+    border: 1px solid rgba(0, 255, 136, 0.2);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: var(--clr-chemistry);
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .welcome-card {
+        grid-column: span 2;
+    }
+
+    .stats-card {
+        grid-column: span 2;
+    }
+
+    .quote-card {
+        grid-column: span 2;
+    }
+
+    .workspace-layout,
+    .chemistry-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow-y: visible;
+    }
+
+    .controls-panel,
+    .element-details-card {
+        max-height: none;
+    }
+
+    .tab-pane {
+        height: auto;
+        overflow-y: visible;
+    }
+}

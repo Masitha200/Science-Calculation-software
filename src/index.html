@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SciMath Visualizer - Interactive Desktop Lab</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path
+                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                        </path>
+                    </svg>
+                </div>
+                <div class="brand-name">
+                    <h1 data-translate="app_title">SciMath</h1>
+                    <span data-translate="app_subtitle">Visual Studio</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard" id="nav-dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+                        <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+                        <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+                        <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+                    </svg>
+                    <span data-translate="nav_dash">Dashboard</span>
+                </button>
+                <div class="nav-section-title" data-translate="nav_sec_title">Solvers & Labs</div>
+                <button class="nav-item" data-tab="math" id="nav-math">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <span data-translate="nav_math">Mathematics Studio</span>
+                </button>
+                <button class="nav-item" data-tab="physics" id="nav-physics">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <span data-translate="nav_physics">Physics Sandbox</span>
+                </button>
+                <button class="nav-item" data-tab="chemistry" id="nav-chemistry">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M10 2v7.51L4.39 17.62a2.12 2.12 0 0 0 0 2.37l.01.01A2.12 2.12 0 0 0 6.22 21h11.57a2.12 2.12 0 0 0 1.81-1.02l.01-.01a2.12 2.12 0 0 0 0-2.37L14 9.51V2">
+                        </path>
+                        <line x1="8.5" y1="2" x2="15.5" y2="2"></line>
+                        <line x1="7" y1="12" x2="17" y2="12"></line>
+                    </svg>
+                    <span data-translate="nav_chemistry">Chemistry Lab</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="dot green"></span>
+                    <span data-translate="footer_status">Offline Engine Active</span>
+                </div>
+                <div class="app-version">v1.0.0 Stable</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header Bar -->
+            <header class="content-header">
+                <div>
+                    <h2 id="current-tab-title">Interactive Dashboard</h2>
+                    <p id="current-tab-description">Learn science and mathematics through beautiful dynamic simulations.
+                    </p>
+                </div>
+                <div class="header-actions">
+                    <button class="header-btn" id="btn-reset-layout" title="Reset Sandbox Settings">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+                        </svg>
+                        <span data-translate="btn_reset">Reset Demo</span>
+                    </button>
+                    <!-- Language dropdown selector -->
+                    <div class="lang-selector-group">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor"
+                            stroke-width="2" style="opacity: 0.7;">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                        <select id="lang-select" class="header-select">
+                            <option value="en">English</option>
+                            <option value="si">සිංහල (Sinhala)</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="clock-display" id="header-clock">12:00:00 PM</div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="tab-dashboard" class="tab-pane active">
+                <div class="dashboard-grid">
+                    <!-- Welcome Card -->
+                    <div class="dash-card welcome-card glass">
+                        <canvas id="dashboard-particles"></canvas>
+                        <div class="welcome-content">
+                            <span class="badge" data-translate="dash_badge">OFFLINE DESKTOP LAB</span>
+                            <h2 data-translate="dash_welcome_title">Exploration through Visualizing</h2>
+                            <p data-translate="dash_welcome_desc">Unlock the secrets of math and physics. Choose a lab
+                                from the sidebar, adjust simulation parameters in real time, and watch the calculations
+                                dynamically unfold step-by-step!</p>
+                            <div class="welcome-buttons">
+                                <button class="btn btn-primary" onclick="switchTab('math')"
+                                    data-translate="dash_btn_math">
+                                    Math Studio
+                                </button>
+                                <button class="btn btn-outline" onclick="switchTab('physics')"
+                                    data-translate="dash_btn_physics">
+                                    Physics Sandbox
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics/Features Quick View -->
+                    <div class="dash-card stats-card glass">
+                        <h3 data-translate="constants_title">Scientific Constants Drawer</h3>
+                        <p class="section-desc" data-translate="constants_desc">Quick look at universal constants for
+                            science & math calculations.</p>
+                        <div class="constants-grid">
+                            <div class="constant-item" title="Speed of light in vacuum">
+                                <span class="const-symbol">c</span>
+                                <span class="const-name" data-translate="const_sol">Speed of Light</span>
+                                <span class="const-value">299,792,458 m/s</span>
+                            </div>
+                            <div class="constant-item" title="Acceleration due to Earth's gravity">
+                                <span class="const-symbol">g</span>
+                                <span class="const-name" data-translate="const_grav">Standard Gravity</span>
+                                <span class="const-value">9.80665 m/s²</span>
+                            </div>
+                            <div class="constant-item" title="Universal gravitational constant">
+                                <span class="const-symbol">G</span>
+                                <span class="const-name" data-translate="const_gconst">Gravitational Const</span>
+                                <span class="const-value">6.6743 × 10⁻¹¹ N·m²/kg²</span>
+                            </div>
+                            <div class="constant-item" title="Planks constant">
+                                <span class="const-symbol">h</span>
+                                <span class="const-name" data-translate="const_planck">Planck Constant</span>
+                                <span class="const-value">6.62607 × 10⁻³⁴ J·s</span>
+                            </div>
+                            <div class="constant-item" title="Ratio of circumference to diameter">
+                                <span class="const-symbol">π</span>
+                                <span class="const-name" data-translate="const_pi">Pi (Circle Ratio)</span>
+                                <span class="const-value">3.1415926535...</span>
+                            </div>
+                            <div class="constant-item" title="Base of natural logarithms">
+                                <span class="const-symbol">e</span>
+                                <span class="const-name" data-translate="const_euler">Euler's Number</span>
+                                <span class="const-value">2.7182818284...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quote / Inspiration Section -->
+                    <div class="dash-card quote-card glass">
+                        <div class="quote-container">
+                            <span class="quote-mark">“</span>
+                            <blockquote class="quote-text" id="daily-quote">Mathematics reveals its secrets only to
+                                those who approach it with pure love, for its beauty.</blockquote>
+                            <cite class="quote-author" id="daily-quote-author">— Archimedes</cite>
+                        </div>
+                        <button class="btn btn-text btn-next-quote" id="btn-next-quote"
+                            data-translate="btn_next_quote">Next Quote &rarr;</button>
+                    </div>
+
+                    <!-- Sandbox Features Cards -->
+                    <div class="dash-card banner-card glass math-banner-card">
+                        <div class="banner-icon-bg">📐</div>
+                        <h4 data-translate="banner_math_h4">Calculus & Graphing</h4>
+                        <p data-translate="banner_math_p">Plot custom equations, move tangent vectors dynamically to
+                            view differentials, and slide subdivisions to see Riemann calculations.</p>
+                        <a href="#" onclick="switchTab('math'); event.preventDefault();" class="card-link"
+                            data-translate="banner_launch">Launch Solver &rarr;</a>
+                    </div>
+
+                    <div class="dash-card banner-card glass physics-banner-card">
+                        <div class="banner-icon-bg">⚛️</div>
+                        <h4 data-translate="banner_phys_h4">Physics Mechanics</h4>
+                        <p data-translate="banner_phys_p">Simulate perfect motion under varying gravity, air drag, and
+                            angles. Run harmonic oscillations and witness conservation of energy graphs.</p>
+                        <a href="#" onclick="switchTab('physics'); event.preventDefault();" class="card-link"
+                            data-translate="banner_launch">Launch Sandbox &rarr;</a>
+                    </div>
+
+                    <div class="dash-card banner-card glass chemistry-banner-card">
+                        <div class="banner-icon-bg">🧪</div>
+                        <h4 data-translate="banner_chem_h4">Chemistry & Atoms</h4>
+                        <p data-translate="banner_chem_p">Inspect electron distribution in elements with revolving
+                            orbital simulations. Balance equations and view molecule diagrams instantly.</p>
+                        <a href="#" onclick="switchTab('chemistry'); event.preventDefault();" class="card-link"
+                            data-translate="banner_launch">Launch Lab &rarr;</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mathematics Section -->
+            <section id="tab-math" class="tab-pane">
+                <!-- Subtabs -->
+                <div class="tab-tabs">
+                    <button class="subtab-btn active" data-subtab="math-grapher">Calculus & Graphing Space</button>
+                    <button class="subtab-btn" data-subtab="math-matrix">Linear algebra (Matrix Visualizer)</button>
+                    <button class="subtab-btn" data-subtab="math-vector" data-translate="subtab_math_vector">Vector
+                        Operations Solver</button>
+                    <button class="subtab-btn" data-subtab="math-fourier">Fourier Synthesizer</button>
+                    <button class="subtab-btn" data-subtab="math-galton">Galton Board</button>
+                </div>
+
+                <!-- Grapher Subpane -->
+                <div id="subtab-math-grapher" class="subtab-pane active">
+                    <div class="workspace-layout">
+                        <div class="canvas-container glass">
+                            <canvas id="math-canvas"></canvas>
+                            <!-- Overlay coordinates readout -->
+                            <div class="canvas-indicator" id="graph-coords">x: 0.00, y: 0.00</div>
+                        </div>
+
+                        <!-- Sidebar controls for math -->
+                        <div class="controls-panel glass">
+                            <h3>Graph Options</h3>
+                            <div class="control-group">
+                                <label for="math-func-select">Select Function Preset</label>
+                                <select id="math-func-select">
+                                    <option value="sin">f(x) = sin(x)</option>
+                                    <option value="quadratic">f(x) = 0.2 * x² - 3</option>
+                                    <option value="cubic">f(x) = 0.05 * x³ - x</option>
+                                    <option value="gaussian">f(x) = 4 * e^(-0.2 * x²)</option>
+                                    <option value="damped">f(x) = 3 * e^(-0.1*x) * cos(x)</option>
+                                    <option value="custom">Custom Equation...</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group" id="custom-equation-input-group" style="display:none;">
+                                <label for="math-custom-expr">Enter Expression f(x)</label>
+                                <input type="text" id="math-custom-expr" value="x * sin(x)"
+                                    placeholder="e.g. x * sin(x)">
+                                <div class="validation-message" id="math-expr-error"></div>
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="control-group">
+                                <label>Mode Selection</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="math-mode" value="move" checked>
+                                        <span>Graph Inspection</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="math-mode" value="derivative">
+                                        <span>Derivative Mode (Tangent)</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="math-mode" value="integral">
+                                        <span>Integral Mode (Riemann)</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Derivative Controls -->
+                            <div class="math-sub-controls" id="controls-derivative" style="display:none;">
+                                <h4>Tangent Vector Controls</h4>
+                                <div class="control-group">
+                                    <label for="tangent-x-slider">Tangent Point (x): <span
+                                            id="tangent-x-val">0.0</span></label>
+                                    <input type="range" id="tangent-x-slider" min="-10" max="10" step="0.1" value="0">
+                                </div>
+                            </div>
+
+                            <!-- Integral Controls -->
+                            <div class="math-sub-controls" id="controls-integral" style="display:none;">
+                                <h4>Riemann Sum Controls</h4>
+                                <div class="control-row">
+                                    <div class="control-group half">
+                                        <label for="integral-a">Lower Bounds (a): <span
+                                                id="integral-a-val">-4.0</span></label>
+                                        <input type="range" id="integral-a" min="-10" max="10" step="0.5" value="-4">
+                                    </div>
+                                    <div class="control-group half">
+                                        <label for="integral-b">Upper Bounds (b): <span
+                                                id="integral-b-val">4.0</span></label>
+                                        <input type="range" id="integral-b" min="-10" max="10" step="0.5" value="4">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label for="integral-n">Interval Rectangles (n): <span
+                                            id="integral-n-val">20</span></label>
+                                    <input type="range" id="integral-n" min="4" max="100" step="1" value="20">
+                                </div>
+                            </div>
+
+                            <!-- Calculations Panel -->
+                            <div class="math-calc-output glass">
+                                <h4>Interactive Calculations</h4>
+                                <div id="math-results-content">
+                                    Select dry runs or mode to view step by step calculations.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Matrix Subpane -->
+                <div id="subtab-math-matrix" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Matrix Animation Canvas -->
+                        <div class="canvas-container glass">
+                            <canvas id="matrix-canvas"></canvas>
+                            <div class="canvas-overlay-text">Visual Transformation of Vector Space (&Sigma;)</div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Matrix Input Board</h3>
+                            <div class="matrix-input-container">
+                                <div class="matrix-label">M =</div>
+                                <div class="matrix-grid-3x3">
+                                    <input type="number" id="m00" value="2" step="0.5">
+                                    <input type="number" id="m01" value="1" step="0.5">
+                                    <input type="number" id="m02" value="0" step="0.5" class="dim-3-only">
+                                    <input type="number" id="m10" value="0.5" step="0.5">
+                                    <input type="number" id="m11" value="1.5" step="0.5">
+                                    <input type="number" id="m12" value="0" step="0.5" class="dim-3-only">
+                                    <input type="number" id="m20" value="0" step="0.5" class="dim-3-only">
+                                    <input type="number" id="m21" value="0" step="0.5" class="dim-3-only">
+                                    <input type="number" id="m22" value="1" step="0.5" class="dim-3-only">
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label>Matrix Dimensions</label>
+                                <div class="toggle-group-inline">
+                                    <button class="btn btn-outline active" id="btn-matrix-2d">2 &times; 2 Grid</button>
+                                    <button class="btn btn-outline" id="btn-matrix-3d">3 &times; 3 Grid</button>
+                                </div>
+                            </div>
+
+                            <div class="matrix-presets">
+                                <label>Presets</label>
+                                <div class="preset-buttons">
+                                    <button class="btn btn-sm" id="preset-matrix-identity">Identity</button>
+                                    <button class="btn btn-sm" id="preset-matrix-shear">X-Shear</button>
+                                    <button class="btn btn-sm" id="preset-matrix-rotation">Rotation (45&deg;)</button>
+                                    <button class="btn btn-sm" id="preset-matrix-reflection">Reflection</button>
+                                </div>
+                            </div>
+
+                            <div class="matrix-actions">
+                                <button class="btn btn-primary full-width" id="btn-matrix-animate">Animate Grid
+                                    Transformation</button>
+                                <div class="button-row-grid">
+                                    <button class="btn btn-outline" id="btn-matrix-det">Calculate Det</button>
+                                    <button class="btn btn-outline" id="btn-matrix-inv">Find Inverse</button>
+                                </div>
+                            </div>
+
+                            <!-- Matrix Steps and Row-reduction explanations -->
+                            <div class="solutions-scroll glass">
+                                <h4>Row operations & Matrix details</h4>
+                                <div id="matrix-solutions-output">
+                                    Compute determinant or operations to view steps.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vector Subpane -->
+                <div id="subtab-math-vector" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="vector-canvas"></canvas>
+                            <div class="canvas-indicator" id="vector-coords">A = (0, 0) | B = (0, 0)</div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Vector Algebra Space</h3>
+
+                            <div class="control-group">
+                                <label for="vec-ax">Vector A X: <span id="vec-ax-val">4</span></label>
+                                <input type="range" id="vec-ax" min="-10" max="10" step="0.5" value="4">
+                            </div>
+                            <div class="control-group">
+                                <label for="vec-ay">Vector A Y: <span id="vec-ay-val">3</span></label>
+                                <input type="range" id="vec-ay" min="-10" max="10" step="0.5" value="3">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="vec-bx">Vector B X: <span id="vec-bx-val">-3</span></label>
+                                <input type="range" id="vec-bx" min="-10" max="10" step="0.5" value="-3">
+                            </div>
+                            <div class="control-group">
+                                <label for="vec-by">Vector B Y: <span id="vec-by-val">4</span></label>
+                                <input type="range" id="vec-by" min="-10" max="10" step="0.5" value="4">
+                            </div>
+
+                            <div class="control-group">
+                                <label>Angle & Alignment Presets</label>
+                                <div class="preset-buttons">
+                                    <button class="btn btn-sm" id="preset-vec-ortho">Orthogonal (90°)</button>
+                                    <button class="btn btn-sm" id="preset-vec-parallel">Parallel</button>
+                                    <button class="btn btn-sm" id="preset-vec-opposite">Opposite</button>
+                                </div>
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="solutions-scroll glass">
+                                <h4>Vector Math Calculations</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">Vector A: <span>A = [<span id="calc-vec-a">4.0,
+                                                3.0</span>]</span></div>
+                                    <div class="formula-line">Vector B: <span>B = [<span id="calc-vec-b">-3.0,
+                                                4.0</span>]</span></div>
+                                    <div class="formula-line">Sum Vector A+B: <strong class="glow-txt"
+                                            id="calc-vec-sum">[1.0, 7.0]</strong></div>
+                                    <div class="formula-line">Dot Product A · B: <strong class="glow-txt"
+                                            id="calc-vec-dot">0.00</strong></div>
+                                    <div class="formula-line">Cross Product Mag B x A: <strong class="glow-txt"
+                                            id="calc-vec-cross">25.00</strong></div>
+                                    <div class="formula-line">Angle Between &theta;: <strong class="glow-txt"
+                                            id="calc-vec-angle">90.0&deg;</strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fourier Synthesizer Subpane -->
+                <div id="subtab-math-fourier" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="fourier-canvas"></canvas>
+                            <div class="canvas-overlay-text">Fourier Trigonometric Wave Synthesizer (Converging
+                                Harmonics)</div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Fourier Synthesizer</h3>
+
+                            <div class="control-group">
+                                <label for="fourier-wave-type">Target Waveform</label>
+                                <select id="fourier-wave-type">
+                                    <option value="square">Square Wave</option>
+                                    <option value="sawtooth">Sawtooth Wave</option>
+                                    <option value="triangle">Triangle Wave</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="fourier-harmonics">Harmonics count (N): <span
+                                        id="fourier-harm-val">10</span></label>
+                                <input type="range" id="fourier-harmonics" min="1" max="50" step="1" value="10">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="fourier-freq">Base Frequency: <span id="fourier-freq-val">1.0</span></label>
+                                <input type="range" id="fourier-freq" min="0.2" max="3" step="0.1" value="1.0">
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="solutions-scroll glass">
+                                <h4>Fourier Series Equation</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line"><strong class="glow-txt" id="fourier-eqn-display">f(t) =
+                                            (4/π) * Σ [sin(n·ω·t)/n]</strong></div>
+                                    <p class="physics-math-note" style="margin-top: 6px;">Fourier analysis states that
+                                        any periodic function can be decomposed into an infinite sum of sine and cosine
+                                        terms. Increase N to witness Gibbs phenomenon and convergence.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Galton Board Subpane -->
+                <div id="subtab-math-galton" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="galton-canvas"></canvas>
+                            <div class="canvas-overlay-text">Galton Probability Peg Board Simulation</div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Galton Board Settings</h3>
+
+                            <div class="control-group">
+                                <label for="galton-friction">Peg Elasticity (Bounciness): <span
+                                        id="galton-elasticity-val">0.6</span></label>
+                                <input type="range" id="galton-friction" min="0.1" max="0.9" step="0.05" value="0.6">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="galton-rows">Rows of Pegs: <span id="galton-rows-val">10</span></label>
+                                <input type="range" id="galton-rows" min="6" max="12" step="1" value="10">
+                            </div>
+
+                            <div class="action-buttons-flex">
+                                <button class="btn btn-outline" id="btn-galton-run">Auto Drop</button>
+                                <button class="btn btn-outline" id="btn-galton-drop">Single Ball</button>
+                                <button class="btn btn-outline" id="btn-galton-clear">Clear</button>
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="solutions-scroll glass">
+                                <h4>Statistical Distribution</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">Mean (μ): <strong class="glow-txt"
+                                            id="galton-lbl-mean">0.0</strong></div>
+                                    <div class="formula-line">Standard Dev (σ): <strong class="glow-txt"
+                                            id="galton-lbl-std">1.5</strong></div>
+                                    <div class="formula-line">Dropped count: <strong class="glow-txt"
+                                            id="galton-lbl-balls">0</strong></div>
+                                </div>
+                                <p class="physics-math-note" style="margin-top: 6px;">As balls bounce left/right through
+                                    pegs, they approximate a Binomial distribution which shifts to a continuous Normal
+                                    Distribution at larger counts (Central Limit Theorem).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Physics Sandbox -->
+            <section id="tab-physics" class="tab-pane">
+                <div class="tab-tabs">
+                    <button class="subtab-btn active" data-subtab="physics-projectile">Projectile Kinematics</button>
+                    <button class="subtab-btn" data-subtab="physics-pendulum">Oscillation Lab (Pendulum)</button>
+                    <button class="subtab-btn" data-subtab="physics-double" data-translate="subtab_phys_double">Double
+                        Pendulum (Chaos Lab)</button>
+                    <button class="subtab-btn" data-subtab="physics-optics">Ray Optics Lab</button>
+                    <button class="subtab-btn" data-subtab="physics-gravity">Orbital Sandbox</button>
+                </div>
+
+                <!-- Projectile Motion Subpane -->
+                <div id="subtab-physics-projectile" class="subtab-pane active">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="projectile-canvas"></canvas>
+                            <!-- Real-time HUD stats -->
+                            <div class="physics-hud">
+                                <div class="hud-item"><span>Range:</span> <span id="hud-proj-range">0.00 m</span></div>
+                                <div class="hud-item"><span>Max Height:</span> <span id="hud-proj-height">0.00 m</span>
+                                </div>
+                                <div class="hud-item"><span>Flight Time:</span> <span id="hud-proj-time">0.00 s</span>
+                                </div>
+                                <div class="hud-item"><span>Speed:</span> <span id="hud-proj-speed">0.00 m/s</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Kinematics Settings</h3>
+
+                            <div class="control-group">
+                                <label for="proj-speed">Initial Velocity (v₀): <span id="proj-speed-val">20
+                                        m/s</span></label>
+                                <input type="range" id="proj-speed" min="5" max="40" step="1" value="20">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="proj-angle">Launch Angle (θ): <span
+                                        id="proj-angle-val">45&deg;</span></label>
+                                <input type="range" id="proj-angle" min="0" max="90" step="1" value="45">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="proj-gravity">Gravity Acceleration (g): <span id="proj-gravity-val">9.81
+                                        m/s²</span></label>
+                                <input type="range" id="proj-gravity" min="1" max="25" step="0.1" value="9.8">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="proj-drag">Air Damping force (c_d): <span
+                                        id="proj-drag-val">0.00</span></label>
+                                <input type="range" id="proj-drag" min="0" max="0.5" step="0.01" value="0.05">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="proj-launch-height">Initial Launch Height: <span id="proj-height-val">0
+                                        m</span></label>
+                                <input type="range" id="proj-launch-height" min="0" max="15" step="1" value="0">
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="action-buttons-flex">
+                                <button class="btn btn-outline" id="btn-proj-run">Simulate</button>
+                                <button class="btn btn-outline" id="btn-proj-pause">Pause</button>
+                                <button class="btn btn-outline" id="btn-proj-clear">Reset</button>
+                            </div>
+
+                            <!-- Explanations panel -->
+                            <div class="math-calc-output glass physics-equations-panel">
+                                <h4>Kinematics Formulas</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">Horizontal Distance: <strong class="glow-txt">x(t) =
+                                            v₀·t·cos(θ)</strong></div>
+                                    <div class="formula-line">Vertical Height: <strong class="glow-txt">y(t) = y₀ +
+                                            v₀·t·sin(θ) - 0.5·g·t²</strong></div>
+                                    <div class="formula-line">Max Horizontal Range: <strong class="glow-txt">R =
+                                            (v₀²·sin(2θ)) / g</strong></div>
+                                </div>
+                                <p class="physics-math-note">Adjust gravity or add drag factor to watch energy dissipate
+                                    from the system visually in the trace curve.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pendulum Subpane -->
+                <div id="subtab-physics-pendulum" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="pendulum-canvas"></canvas>
+                            <!-- Real-time HUD energy graph -->
+                            <div class="pendulum-hud">
+                                <div class="energy-graph">
+                                    <div class="energy-bar-lbl">Kinetic Energy (KE):</div>
+                                    <div class="energy-bar-outer">
+                                        <div id="bar-ke" class="energy-bar ke-fill" style="width: 50%;"></div>
+                                    </div>
+
+                                    <div class="energy-bar-lbl">Potential Energy (PE):</div>
+                                    <div class="energy-bar-outer">
+                                        <div id="bar-pe" class="energy-bar pe-fill" style="width: 50%;"></div>
+                                    </div>
+
+                                    <div class="energy-bar-lbl">Total Energy (E):</div>
+                                    <div class="energy-bar-outer">
+                                        <div id="bar-total" class="energy-bar total-fill" style="width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Pendulum Settings</h3>
+
+                            <div class="control-group">
+                                <label for="pend-length">String Length (L): <span id="pend-length-val">2.5
+                                        m</span></label>
+                                <input type="range" id="pend-length" min="1.0" max="4.0" step="0.1" value="2.5">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="pend-mass">Bob Mass (M): <span id="pend-mass-val">2.0 kg</span></label>
+                                <input type="range" id="pend-mass" min="0.5" max="10.0" step="0.5" value="2.0">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="pend-gravity">Gravity (g): <span id="pend-gravity-val">9.81
+                                        m/s²</span></label>
+                                <input type="range" id="pend-gravity" min="0" max="25" step="0.1" value="9.8">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="pend-damping">Air Friction (b): <span
+                                        id="pend-damping-val">0.05</span></label>
+                                <input type="range" id="pend-damping" min="0" max="0.5" step="0.01" value="0.05">
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="action-buttons-flex">
+                                <button class="btn btn-outline" id="btn-pend-play">Pause</button>
+                                <button class="btn btn-outline" id="btn-pend-reset">Reset</button>
+                            </div>
+
+                            <div class="math-calc-output glass physics-equations-panel">
+                                <h4>Harmonic Motion Formulas</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">Angular Acceleration: <strong class="glow-txt">&alpha; =
+                                            -(g / L) &middot; sin(&theta;)</strong></div>
+                                    <div class="formula-line">Potential Energy: <strong class="glow-txt">PE = m &middot;
+                                            g &middot; L &middot; (1 - cos(&theta;))</strong></div>
+                                    <div class="formula-line">Kinetic Energy: <strong class="glow-txt">KE = 0.5 &middot;
+                                            m &middot; (L &middot; &omega;)²</strong></div>
+                                    <div class="formula-line">Oscillation Period: <strong class="glow-txt">T &approx;
+                                            2&pi; &radic;(L / g)</strong></div>
+                                </div>
+                                <p class="physics-math-note">Click and drag inside the sandbox to throw or set the
+                                    initial phase angle of the pendulum bob.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Double Pendulum Subpane -->
+                <div id="subtab-physics-double" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="double-canvas"></canvas>
+                            <div class="canvas-overlay-text">Double Pendulum Simulation - Chaos & Non-linear Dynamics
+                            </div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Chaos Sandbox Controls</h3>
+
+                            <div class="control-group">
+                                <label for="double-rod1">Rod 1 Length (L₁): <span id="double-rod1-val">120
+                                        px</span></label>
+                                <input type="range" id="double-rod1" min="50" max="200" step="5" value="120">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="double-rod2">Rod 2 Length (L₂): <span id="double-rod2-val">120
+                                        px</span></label>
+                                <input type="range" id="double-rod2" min="50" max="200" step="5" value="120">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="double-mass1">Bob 1 Mass (m₁): <span id="double-mass1-val">15</span></label>
+                                <input type="range" id="double-mass1" min="5" max="40" step="1" value="15">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="double-mass2">Bob 2 Mass (m₂): <span id="double-mass2-val">15</span></label>
+                                <input type="range" id="double-mass2" min="5" max="40" step="1" value="15">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="double-trail">Trail Fade Length: <span id="double-trail-val">200
+                                        frames</span></label>
+                                <input type="range" id="double-trail" min="10" max="1000" step="10" value="200">
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="action-buttons-flex">
+                                <button class="btn btn-outline" id="btn-double-run">Simulate</button>
+                                <button class="btn btn-outline" id="btn-double-pause">Pause</button>
+                                <button class="btn btn-outline" id="btn-double-clear">Reset</button>
+                            </div>
+
+                            <div class="solutions-scroll glass">
+                                <h4>Theoretical Equations</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">State variables: <strong>&theta;₁, &omega;₁, &theta;₂,
+                                            &omega;₂</strong></div>
+                                    <p class="physics-math-note" style="margin-top: 4px;">Resolved using Runge-Kutta
+                                        numerical integration (RK4) to evaluate chaotic equations of motion derived from
+                                        the Lagrangian system.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ray Optics Lab Subpane -->
+                <div id="subtab-physics-optics" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="optics-canvas"></canvas>
+                            <div class="canvas-overlay-text">Interactive Geometric Ray Optics (Draggable Source & Lens)
+                            </div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Ray Optics Settings</h3>
+
+                            <div class="control-group">
+                                <label for="optics-focal">Focal Length (f): <span id="optics-focal-val">120
+                                        px</span></label>
+                                <input type="range" id="optics-focal" min="-200" max="200" step="5" value="120">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="optics-obj-dist">Object Position (d_o): <span id="optics-obj-val">200
+                                        px</span></label>
+                                <input type="range" id="optics-obj-dist" min="50" max="350" step="1" value="200">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="optics-obj-height">Object Height (y): <span id="optics-obj-h-val">60
+                                        px</span></label>
+                                <input type="range" id="optics-obj-height" min="-100" max="100" step="2" value="60">
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="solutions-scroll glass">
+                                <h4>Thin Lens Calculations</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">Image Position (d_i): <strong class="glow-txt"
+                                            id="optics-lbl-di">0.0 px</strong></div>
+                                    <div class="formula-line">Image Height (y_i): <strong class="glow-txt"
+                                            id="optics-lbl-yi">0.0 px</strong></div>
+                                    <div class="formula-line">Magnification (M): <strong class="glow-txt"
+                                            id="optics-lbl-mag">0.0</strong></div>
+                                    <div class="formula-line">Image Type: <strong class="glow-txt"
+                                            id="optics-lbl-type">Real, Inverted</strong></div>
+                                </div>
+                                <p class="physics-math-note" style="margin-top: 6px;">Solves the Thin Lens Equation: 1/f
+                                    = 1/d_o + 1/d_i. A positive focal length represents a converging convex lens;
+                                    negative values represent a diverging concave lens.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orbital Sandbox Subpane -->
+                <div id="subtab-physics-gravity" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="gravity-canvas"></canvas>
+                            <div class="canvas-overlay-text">Newtonian N-Body Gravity Orbit Sandbox</div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Orbital Settings</h3>
+
+                            <div class="control-group">
+                                <label for="grav-star-mass">Central Star Mass (M): <span
+                                        id="grav-star-val">10000</span></label>
+                                <input type="range" id="grav-star-mass" min="1000" max="50000" step="500" value="10000">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="grav-planet-vel">Orbit Velocity (v_y): <span
+                                        id="grav-vel-val">2.8</span></label>
+                                <input type="range" id="grav-planet-vel" min="0.5" max="6.0" step="0.1" value="2.8">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="grav-planet-rad">Orbital Radius (r): <span id="grav-rad-val">120
+                                        px</span></label>
+                                <input type="range" id="grav-planet-rad" min="50" max="220" step="5" value="120">
+                            </div>
+
+                            <div class="action-buttons-flex">
+                                <button class="btn btn-outline" id="btn-grav-run">Simulate</button>
+                                <button class="btn btn-outline" id="btn-grav-pause">Pause</button>
+                                <button class="btn btn-outline" id="btn-grav-clear">Reset</button>
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="solutions-scroll glass">
+                                <h4>Celestial Mechanics</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">Gravity Force: <strong class="glow-txt">F_g = G·M·m /
+                                            r²</strong></div>
+                                    <div class="formula-line">Orbital Speed: <strong class="glow-txt"
+                                            id="grav-lbl-speed">v = (G·M/r)^0.5</strong></div>
+                                    <div class="formula-line">Current Distance: <strong class="glow-txt"
+                                            id="grav-lbl-dist">120 px</strong></div>
+                                </div>
+                                <p class="physics-math-note" style="margin-top: 6px;">Observe Keplerian planetary
+                                    motion. High velocity generates elliptical/hyperbolic escape orbits; low velocity
+                                    leads to orbital decay and collision.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chemistry Section -->
+            <section id="tab-chemistry" class="tab-pane">
+                <div class="tab-tabs">
+                    <button class="subtab-btn active" data-subtab="chemistry-periodic">Dynamic Periodic Table & Bohr
+                        Model</button>
+                    <button class="subtab-btn" data-subtab="chemistry-balancer">Equation Balancer & Atoms</button>
+                    <button class="subtab-btn" data-subtab="chemistry-molecule" data-translate="subtab_chem_molecule">3D
+                        Molecule Viewer</button>
+                    <button class="subtab-btn" data-subtab="chemistry-titration">pH Titration Lab</button>
+                    <button class="subtab-btn" data-subtab="chemistry-flame">Flame Spectrograph</button>
+                </div>
+
+                <!-- Periodic Table Subpane -->
+                <div id="subtab-chemistry-periodic" class="subtab-pane active">
+                    <div class="chemistry-layout">
+                        <!-- Left: Periodic Table Grid -->
+                        <div class="periodic-table-column">
+                            <div class="periodic-selector-row">
+                                <span class="lbl-info">Filter Group:</span>
+                                <div class="filter-buttons">
+                                    <button class="btn btn-xs filter-btn active" data-filter="all">All</button>
+                                    <button class="btn btn-xs filter-btn" data-filter="nonmetal">Nonmetals</button>
+                                    <button class="btn btn-xs filter-btn" data-filter="noble">Noble Gases</button>
+                                    <button class="btn btn-xs filter-btn" data-filter="alkali">Alkali</button>
+                                    <button class="btn btn-xs filter-btn" data-filter="alkaline">Alkaline Earth</button>
+                                    <button class="btn btn-xs filter-btn" data-filter="metalloid">Metalloids</button>
+                                    <button class="btn btn-xs filter-btn" data-filter="halogen">Halogens</button>
+                                    <button class="btn btn-xs filter-btn" data-filter="transition">Transition
+                                        Metals</button>
+                                    <button class="btn btn-xs filter-btn"
+                                        data-filter="lanact">Lanthanide/Actinide</button>
+                                </div>
+                            </div>
+                            <div class="periodic-grid" id="periodic-elements-grid">
+                                <!-- Elements generated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Right: Element Details & Bohr orbit canvas -->
+                        <div class="element-details-card glass">
+                            <div class="details-top">
+                                <div class="selected-element-badge" id="details-symbol-badge">
+                                    <span class="anumbr" id="details-num">1</span>
+                                    <span class="symb" id="details-symbol">H</span>
+                                </div>
+                                <div class="selected-text-meta">
+                                    <h3 id="details-name">Hydrogen</h3>
+                                    <span class="atomic-mass" id="details-mass">1.008 u</span>
+                                    <span class="element-group-tag" id="details-group-tag">Reactive Nonmetal</span>
+                                </div>
+                            </div>
+
+                            <div class="bohr-visualizer-container">
+                                <canvas id="bohr-canvas"></canvas>
+                                <div class="bohr-indicator">Bohr Model Atomic Shell Orbitals</div>
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="element-properties-list">
+                                <div class="prop-item">
+                                    <span class="p-lbl">Electron Configuration:</span>
+                                    <span class="p-val" id="details-config">1s¹</span>
+                                </div>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Melting Point:</span>
+                                    <span class="p-val" id="details-melt">-259.1 °C</span>
+                                </div>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Boiling Point:</span>
+                                    <span class="p-val" id="details-boil">-252.9 °C</span>
+                                </div>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Electronegativity:</span>
+                                    <span class="p-val" id="details-neg">2.20</span>
+                                </div>
+                                <div class="prop-item desc-prop">
+                                    <span class="p-lbl">Interesting Fact:</span>
+                                    <span class="p-val" id="details-fact">Makes up roughly 75% of the universe's
+                                        elemental mass. Highly flammable.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equation Balancer Subpane -->
+                <div id="subtab-chemistry-balancer" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area for drawing balanced molecules -->
+                        <div class="canvas-container glass">
+                            <canvas id="molecule-canvas"></canvas>
+                            <div class="canvas-overlay-text">Molecular balance representation of Atoms</div>
+                        </div>
+
+                        <!-- Balancer forms and steps -->
+                        <div class="controls-panel glass">
+                            <h3>Stoichiometric Equator</h3>
+                            <div class="control-group">
+                                <label for="chem-input-eq">Enter Reaction Equation</label>
+                                <input type="text" id="chem-input-eq" value="C3H8 + O2 = CO2 + H2O"
+                                    placeholder="e.g. Fe + O2 = Fe2O3">
+                                <span class="help-text">Input reactants & products separated by plus (+) and equals (=).
+                                    Elements are case-sensitive.</span>
+                            </div>
+
+                            <button class="btn btn-primary full-width" id="btn-balance-equation">Balance Chemical
+                                Equation</button>
+
+                            <div class="balancer-presets">
+                                <label>Presets</label>
+                                <div class="preset-buttons">
+                                    <button class="btn btn-sm" onclick="setReactionPreset('H2 + O2 = H2O')">Water
+                                        synthesis</button>
+                                    <button class="btn btn-sm" onclick="setReactionPreset('Fe + Cl2 = FeCl3')">Iron
+                                        Chloride</button>
+                                    <button class="btn btn-sm"
+                                        onclick="setReactionPreset('CH4 + O2 = CO2 + H2O')">Methane Burn</button>
+                                    <button class="btn btn-sm" onclick="setReactionPreset('Al + O2 = Al2O3')">Aluminium
+                                        oxide</button>
+                                </div>
+                            </div>
+
+                            <!-- Calculations Panel -->
+                            <div class="math-calc-output glass chemistry-balance-steps">
+                                <h4>Chemical Balance Readout</h4>
+                                <div id="balancer-results-output">
+                                    Enter an equation or select standard presets to solve matrix coefficient values.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Molecule Viewer Subpane -->
+                <div id="subtab-chemistry-molecule" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="molecule-3d-canvas"></canvas>
+                            <div class="canvas-overlay-text">Interactive 3D Ball-and-Stick Model (Draggable & Rotating)
+                            </div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>3D Molecule Viewer</h3>
+
+                            <div class="control-group">
+                                <label for="molecule-preset">Select Compound</label>
+                                <select id="molecule-preset">
+                                    <option value="H2O">Water (H₂O)</option>
+                                    <option value="CO2">Carbon Dioxide (CO₂)</option>
+                                    <option value="CH4">Methane (CH₄)</option>
+                                    <option value="NH3">Ammonia (NH₃)</option>
+                                    <option value="C2H5OH">Ethanol (C₂H₅OH)</option>
+                                    <option value="O2">Oxygen Gas (O₂)</option>
+                                    <option value="N2">Nitrogen Gas (N₂)</option>
+                                    <option value="HCl">Hydrogen Chloride (HCl)</option>
+                                    <option value="SO2">Sulfur Dioxide (SO₂)</option>
+                                    <option value="C2H4">Ethylene (C₂H₄)</option>
+                                    <option value="H2SO4">Sulfuric Acid (H₂SO₄)</option>
+                                    <option value="C6H6">Benzene (C₆H₆)</option>
+                                </select>
+                            </div>
+
+                            <div class="control-group">
+                                <label for="mol-rotation-speed">Auto Rotation Speed: <span
+                                        id="mol-spd-val">1.0</span></label>
+                                <input type="range" id="mol-rotation-speed" min="0" max="3" step="0.2" value="1.0">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="mol-atom-scale">Atom Visual Scale: <span
+                                        id="mol-scale-val">100%</span></label>
+                                <input type="range" id="mol-atom-scale" min="50" max="150" step="10" value="100">
+                            </div>
+
+                            <div class="solutions-scroll glass">
+                                <h4>Chemical Properties</h4>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Molecular Formula:</span>
+                                    <span class="p-val" id="mol-formula">H₂O</span>
+                                </div>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Bond Angle:</span>
+                                    <span class="p-val" id="mol-angle">104.5°</span>
+                                </div>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Molar Mass:</span>
+                                    <span class="p-val" id="mol-mass">18.015 g/mol</span>
+                                </div>
+                                <div class="prop-item desc-prop">
+                                    <span class="p-lbl">Description:</span>
+                                    <span class="p-val" id="mol-desc">A polar inorganic compound that is the main
+                                        constituent of Earth's hydrosphere.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- pH Titration Lab Subpane -->
+                <div id="subtab-chemistry-titration" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="titration-canvas"></canvas>
+                            <div class="canvas-overlay-text">Acid-Base Titration Laboratory (Interactive Volumetric
+                                Analysis)</div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Titration Settings</h3>
+
+                            <div class="control-group">
+                                <label for="tit-acid-conc">HCl Acid Conc (M): <span id="tit-acid-val">0.10
+                                        M</span></label>
+                                <input type="range" id="tit-acid-conc" min="0.01" max="1.0" step="0.01" value="0.10">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="tit-base-conc">NaOH Base Conc (M): <span id="tit-base-val">0.10
+                                        M</span></label>
+                                <input type="range" id="tit-base-conc" min="0.01" max="1.0" step="0.01" value="0.10">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="tit-drop-vol">NaOH Add Rate: <span id="tit-drop-val">1.0
+                                        mL/drop</span></label>
+                                <input type="range" id="tit-drop-vol" min="0.1" max="5.0" step="0.1" value="1.0">
+                            </div>
+
+                            <div class="control-group">
+                                <label for="tit-indicator">Select Indicator</label>
+                                <select id="tit-indicator" class="header-select"
+                                    style="width: 100%; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 8px; border-radius: 6px; font-family: inherit;">
+                                    <option value="phenolphthalein">Phenolphthalein (colorless &harr; pink)</option>
+                                    <option value="methyl_orange">Methyl Orange (red &harr; yellow)</option>
+                                    <option value="litmus">Litmus (red &harr; blue)</option>
+                                    <option value="bromothymol_blue">Bromothymol Blue (yellow &harr; blue)</option>
+                                </select>
+                            </div>
+
+                            <div class="action-buttons-flex">
+                                <button class="btn btn-primary" id="btn-tit-drop">Add Drop</button>
+                                <button class="btn btn-outline" id="btn-tit-auto">Auto Titrate</button>
+                                <button class="btn btn-outline" id="btn-tit-reset">Reset</button>
+                            </div>
+
+                            <hr class="panel-divider">
+
+                            <div class="solutions-scroll glass">
+                                <h4>Reaction Equivalence</h4>
+                                <div class="math-formula-box">
+                                    <div class="formula-line">Solution pH: <strong class="glow-txt"
+                                            id="tit-lbl-ph">1.00</strong></div>
+                                    <div class="formula-line">Base Added: <strong class="glow-txt"
+                                            id="tit-lbl-base-added">0.0 mL</strong></div>
+                                    <div class="formula-line">Cation Indicator: <strong class="glow-txt"
+                                            id="tit-lbl-indicator">Acidic (Red)</strong></div>
+                                </div>
+                                <p class="physics-math-note" style="margin-top: 6px;">HCl + NaOH → NaCl + H₂O.
+                                    Visualizes equivalence endpoint using a pH universal indicator. Neutralization
+                                    occurs instantly at pH 7.0.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flame Spectrograph Subpane -->
+                <div id="subtab-chemistry-flame" class="subtab-pane">
+                    <div class="workspace-layout">
+                        <!-- Canvas area -->
+                        <div class="canvas-container glass">
+                            <canvas id="flame-canvas"></canvas>
+                            <div class="canvas-overlay-text">Cation Flame Emission Spectrograph & Bunsen Burner</div>
+                        </div>
+
+                        <!-- Controls Panel -->
+                        <div class="controls-panel glass">
+                            <h3>Flame Test Cation</h3>
+
+                            <div class="control-group">
+                                <label for="flame-element-select">Select Chloride Salt</label>
+                                <select id="flame-element-select" class="header-select"
+                                    style="width: 100%; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); padding: 8px; border-radius: 6px; font-family: inherit;">
+                                    <option value="NaCl">Sodium Chloride (NaCl)</option>
+                                    <option value="CuCl2">Copper(II) Chloride (CuCl₂)</option>
+                                    <option value="KCl">Potassium Chloride (KCl)</option>
+                                    <option value="LiCl">Lithium Chloride (LiCl)</option>
+                                    <option value="BaCl2">Barium Chloride (BaCl₂)</option>
+                                    <option value="SrCl2">Strontium Chloride (SrCl₂)</option>
+                                    <option value="CaCl2">Calcium Chloride (CaCl₂)</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn-primary full-width" id="btn-flame-strike"
+                                style="margin-top: 15px;">Insert Loop to Flame</button>
+
+                            <hr class="panel-divider">
+
+                            <div class="solutions-scroll glass">
+                                <h4>Spectral Analysis Data</h4>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Cation Ion:</span>
+                                    <span class="p-val" id="flame-lbl-cation">Na⁺</span>
+                                </div>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Flame Color:</span>
+                                    <span class="p-val" id="flame-lbl-color"
+                                        style="color: #eab308; font-weight: bold;">Yellow-Orange</span>
+                                </div>
+                                <div class="prop-item">
+                                    <span class="p-lbl">Main Resonance Wavelength:</span>
+                                    <span class="p-val" id="flame-lbl-wavelength">589 nm</span>
+                                </div>
+                                <div class="prop-item desc-prop">
+                                    <span class="p-lbl">Quantum Mechanism:</span>
+                                    <span class="p-val" id="flame-lbl-desc">Thermally excited valence electrons undergo
+                                        quantum transition jump to ground state, emitting photons with discrete
+                                        wavelength energies.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Include Application JS Modules -->
+    <script src="app.js"></script>
+    <script src="modules/math.js"></script>
+    <script src="modules/physics.js"></script>
+    <script src="modules/chemistry.js"></script>
+</body>
+
+</html>
