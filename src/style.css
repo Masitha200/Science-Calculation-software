@@ -262,6 +262,7 @@ body {
     padding: 30px;
     height: 100vh;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     background: radial-gradient(circle at 80% 20%, rgba(20, 20, 45, 0.4) 0%, rgba(7, 7, 18, 0) 60%);
 }
 
@@ -348,7 +349,7 @@ body {
 }
 
 .clock-display {
-    font-family: var(--font-mono);
+    font-family: 'Consolas', 'Courier New', monospace;
     font-size: 14px;
     background: rgba(255, 255, 255, 0.03);
     padding: 8px 12px;
@@ -356,7 +357,7 @@ body {
     border: 1px solid var(--panel-border);
     letter-spacing: 0.5px;
     color: var(--text-secondary);
-    min-width: 110px;
+    min-width: 130px;
     text-align: center;
     font-variant-numeric: tabular-nums;
 }
@@ -377,6 +378,7 @@ body {
     flex-grow: 1;
     height: calc(100vh - 130px);
     overflow-y: auto;
+    scrollbar-gutter: stable;
 }
 
 .tab-pane.active {
