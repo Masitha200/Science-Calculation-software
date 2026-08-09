@@ -443,8 +443,10 @@ function drawBohrAtom() {
 }
 
 function animateBohrModel() {
-    bohrState.angle += 0.015;
-    drawBohrAtom();
+    if (isChemistryInitialized && typeof state !== 'undefined' && state.activeTab === 'chemistry' && activeChemistrySubtabName === 'chemistry-periodic') {
+        bohrState.angle += 0.015;
+        drawBohrAtom();
+    }
     requestAnimationFrame(animateBohrModel);
 }
 
@@ -1114,7 +1116,7 @@ function rotate3DPoint(x, y, z, rx, ry, rz) {
 }
 
 function animateMolecule3D() {
-    if (molecule3dCanvas) {
+    if (molecule3dCanvas && isChemistryInitialized && typeof state !== 'undefined' && state.activeTab === 'chemistry' && activeChemistrySubtabName === 'chemistry-molecule') {
         if (!molState.isDragging && molState.autoSpd > 0) {
             molState.ry += 0.012 * molState.autoSpd;
             molState.rx += 0.006 * molState.autoSpd;
@@ -1821,13 +1823,15 @@ function drawFlameSpectraSpace() {
 // Coordinate animation loop switches
 let activeChemistrySubtabName = 'chemistry-periodic';
 function chemistryAnimationLoop() {
-    const activeSub = document.querySelector('#tab-chemistry .subtab-btn.active');
-    if (activeSub) {
-        activeChemistrySubtabName = activeSub.getAttribute('data-subtab');
-        if (activeChemistrySubtabName === 'chemistry-titration') {
-            renderTitrationSpace();
-        } else if (activeChemistrySubtabName === 'chemistry-flame') {
-            drawFlameSpectraSpace();
+    if (isChemistryInitialized && typeof state !== 'undefined' && state.activeTab === 'chemistry') {
+        const activeSub = document.querySelector('#tab-chemistry .subtab-btn.active');
+        if (activeSub) {
+            activeChemistrySubtabName = activeSub.getAttribute('data-subtab');
+            if (activeChemistrySubtabName === 'chemistry-titration') {
+                renderTitrationSpace();
+            } else if (activeChemistrySubtabName === 'chemistry-flame') {
+                drawFlameSpectraSpace();
+            }
         }
     }
 

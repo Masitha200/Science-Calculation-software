@@ -414,6 +414,7 @@ function runPhysicsLoop() {
 }
 
 function drawPhysicsFrame() {
+    if (!isPhysicsInitialized || typeof state === 'undefined' || state.activeTab !== 'physics') return;
     const activeSubpane = document.querySelector('#tab-physics .subtab-btn.active');
     if (!activeSubpane) return;
 

@@ -842,6 +842,7 @@ body {
     gap: 16px;
     max-height: 100%;
     overflow-y: auto;
+    scrollbar-gutter: stable;
 }
 
 .controls-panel h3 {
@@ -1031,6 +1032,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     margin-top: auto;
     max-height: 180px;
     overflow-y: auto;
+    scrollbar-gutter: stable;
 }
 
 .math-calc-output h4 {
@@ -1163,6 +1165,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .solutions-scroll {
     max-height: 180px;
     overflow-y: auto;
+    scrollbar-gutter: stable;
     padding: 12px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 12px;

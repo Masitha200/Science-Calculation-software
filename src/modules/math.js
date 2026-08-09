@@ -1651,13 +1651,15 @@ function drawGaltonSpace() {
 // Coordinate animations
 let activeMathSubtabName = 'math-grapher';
 function mathAnimationLoop() {
-    const activeSub = document.querySelector('#tab-math .subtab-btn.active');
-    if (activeSub) {
-        activeMathSubtabName = activeSub.getAttribute('data-subtab');
-        if (activeMathSubtabName === 'math-fourier') {
-            drawFourierSpace();
-        } else if (activeMathSubtabName === 'math-galton') {
-            drawGaltonSpace();
+    if (isMathInitialized && typeof state !== 'undefined' && state.activeTab === 'math') {
+        const activeSub = document.querySelector('#tab-math .subtab-btn.active');
+        if (activeSub) {
+            activeMathSubtabName = activeSub.getAttribute('data-subtab');
+            if (activeMathSubtabName === 'math-fourier') {
+                drawFourierSpace();
+            } else if (activeMathSubtabName === 'math-galton') {
+                drawGaltonSpace();
+            }
         }
     }
 
