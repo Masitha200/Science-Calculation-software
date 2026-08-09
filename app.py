@@ -73,7 +73,7 @@ def main():
     # Launch Qt application main frame loop
     app = QApplication(sys.argv)
     window = MainWindow(port)
-    window.show()
+    window.showMaximized()
     
     sys.exit(app.exec_())
 
