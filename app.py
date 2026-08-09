@@ -4,7 +4,7 @@ import socket
 import threading
 from http.server import SimpleHTTPRequestHandler
 from socketserver import TCPServer
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
@@ -65,6 +65,10 @@ def main():
     # Fire up quiet assets server on local thread
     server = start_local_server(port, base_dir)
     print(f"SciMath local engine background server started on port {port}.")
+    
+    # Enable High DPI scaling for crisp rendering on high-res displays
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+    QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
     
     # Launch Qt application main frame loop
     app = QApplication(sys.argv)

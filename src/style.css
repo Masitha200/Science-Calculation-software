@@ -356,6 +356,9 @@ body {
     border: 1px solid var(--panel-border);
     letter-spacing: 0.5px;
     color: var(--text-secondary);
+    min-width: 110px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
 /* Glassmorphism utility */
