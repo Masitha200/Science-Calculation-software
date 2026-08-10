@@ -22,7 +22,7 @@ def build_app():
         "pyinstaller",
         "--onefile",
         "--windowed",
-        "--add-data", "src;src",
+        "--add-data", "icon.ico;.",
         "--icon", "icon.ico",
         "--name", "SciMathStudio",
         "app.py"

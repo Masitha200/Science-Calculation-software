@@ -5,6 +5,7 @@ let doubleCanvas, doubleCtx;
 let opticsCanvas, opticsCtx;
 let gravityCanvas, gravityCtx;
 let isPhysicsInitialized = false;
+let isUpdating = false;
 
 // Ray Optics State
 const opticsState = {
@@ -110,10 +111,19 @@ function initPhysicsModule() {
         resetProjectileSim();
     });
 
-    document.getElementById('proj-gravity').addEventListener('input', (e) => {
+    const projGravity = document.getElementById('proj-gravity');
+    projGravity.addEventListener('input', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
+        document.getElementById('proj-gravity-val').textContent = `${parseFloat(e.target.value).toFixed(1)} m/s²`;
+        isUpdating = false;
+    });
+    projGravity.addEventListener('change', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
         projState.gravity = parseFloat(e.target.value);
-        document.getElementById('proj-gravity-val').textContent = `${projState.gravity.toFixed(1)} m/s²`;
         resetProjectileSim();
+        isUpdating = false;
     });
 
     document.getElementById('proj-drag').addEventListener('input', (e) => {
@@ -144,9 +154,18 @@ function initPhysicsModule() {
         document.getElementById('pend-mass-val').textContent = `${pendState.mass.toFixed(1)} kg`;
     });
 
-    document.getElementById('pend-gravity').addEventListener('input', (e) => {
+    const pendGravity = document.getElementById('pend-gravity');
+    pendGravity.addEventListener('input', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
+        document.getElementById('pend-gravity-val').textContent = `${parseFloat(e.target.value).toFixed(1)} m/s²`;
+        isUpdating = false;
+    });
+    pendGravity.addEventListener('change', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
         pendState.gravity = parseFloat(e.target.value);
-        document.getElementById('pend-gravity-val').textContent = `${pendState.gravity.toFixed(1)} m/s²`;
+        isUpdating = false;
     });
 
     document.getElementById('pend-damping').addEventListener('input', (e) => {
@@ -278,16 +297,34 @@ function initPhysicsModule() {
         document.getElementById('grav-star-val').textContent = gravityState.starMass;
     });
 
-    document.getElementById('grav-planet-vel').addEventListener('input', (e) => {
+    const gravPlanetVel = document.getElementById('grav-planet-vel');
+    gravPlanetVel.addEventListener('input', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
+        document.getElementById('grav-vel-val').textContent = parseFloat(e.target.value).toFixed(1);
+        isUpdating = false;
+    });
+    gravPlanetVel.addEventListener('change', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
         gravityState.planetVel = parseFloat(e.target.value);
-        document.getElementById('grav-vel-val').textContent = gravityState.planetVel.toFixed(1);
         resetGravityOrbit();
+        isUpdating = false;
     });
 
-    document.getElementById('grav-planet-rad').addEventListener('input', (e) => {
+    const gravPlanetRad = document.getElementById('grav-planet-rad');
+    gravPlanetRad.addEventListener('input', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
+        document.getElementById('grav-rad-val').textContent = `${parseFloat(e.target.value)} px`;
+        isUpdating = false;
+    });
+    gravPlanetRad.addEventListener('change', (e) => {
+        if (isUpdating) return;
+        isUpdating = true;
         gravityState.planetRad = parseFloat(e.target.value);
-        document.getElementById('grav-rad-val').textContent = `${gravityState.planetRad} px`;
         resetGravityOrbit();
+        isUpdating = false;
     });
 
     document.getElementById('btn-grav-run').addEventListener('click', () => {
@@ -303,6 +340,7 @@ function initPhysicsModule() {
         gravityState.planetVel = 2.8;
         gravityState.planetRad = 120;
 
+        isUpdating = true;
         document.getElementById('grav-star-mass').value = 10000;
         document.getElementById('grav-star-val').textContent = '10000';
         document.getElementById('grav-planet-vel').value = 2.8;
@@ -311,6 +349,8 @@ function initPhysicsModule() {
             document.getElementById('grav-planet-rad').value = 120;
             document.getElementById('grav-rad-val').textContent = '120 px';
         }
+        isUpdating = false;
+
         resetGravityOrbit();
     });
 
@@ -326,29 +366,49 @@ function initPhysicsModule() {
 function resizePhysicsCanvases() {
     if (!projectileCanvas) return;
     const pRect = projectileCanvas.parentElement.getBoundingClientRect();
-    projectileCanvas.width = pRect.width;
-    projectileCanvas.height = pRect.height;
+    const pW = Math.floor(pRect.width);
+    const pH = Math.floor(pRect.height);
+    if (projectileCanvas.width !== pW || projectileCanvas.height !== pH) {
+        projectileCanvas.width = pW;
+        projectileCanvas.height = pH;
+    }
 
     const pendRect = pendulumCanvas.parentElement.getBoundingClientRect();
-    pendulumCanvas.width = pendRect.width;
-    pendulumCanvas.height = pendRect.height;
+    const pendW = Math.floor(pendRect.width);
+    const pendH = Math.floor(pendRect.height);
+    if (pendulumCanvas.width !== pendW || pendulumCanvas.height !== pendH) {
+        pendulumCanvas.width = pendW;
+        pendulumCanvas.height = pendH;
+    }
 
     if (doubleCanvas) {
         const dRect = doubleCanvas.parentElement.getBoundingClientRect();
-        doubleCanvas.width = dRect.width;
-        doubleCanvas.height = dRect.height;
+        const dW = Math.floor(dRect.width);
+        const dH = Math.floor(dRect.height);
+        if (doubleCanvas.width !== dW || doubleCanvas.height !== dH) {
+            doubleCanvas.width = dW;
+            doubleCanvas.height = dH;
+        }
     }
 
     if (opticsCanvas) {
         const optRect = opticsCanvas.parentElement.getBoundingClientRect();
-        opticsCanvas.width = optRect.width;
-        opticsCanvas.height = optRect.height;
+        const optW = Math.floor(optRect.width);
+        const optH = Math.floor(optRect.height);
+        if (opticsCanvas.width !== optW || opticsCanvas.height !== optH) {
+            opticsCanvas.width = optW;
+            opticsCanvas.height = optH;
+        }
     }
 
     if (gravityCanvas) {
         const gravRect = gravityCanvas.parentElement.getBoundingClientRect();
-        gravityCanvas.width = gravRect.width;
-        gravityCanvas.height = gravRect.height;
+        const gravW = Math.floor(gravRect.width);
+        const gravH = Math.floor(gravRect.height);
+        if (gravityCanvas.width !== gravW || gravityCanvas.height !== gravH) {
+            gravityCanvas.width = gravW;
+            gravityCanvas.height = gravH;
+        }
     }
 }
 
@@ -744,8 +804,10 @@ function resetPhysicsModule() {
     document.getElementById('proj-angle').value = 45;
     document.getElementById('proj-angle-val').textContent = '45°';
 
+    isUpdating = true;
     document.getElementById('proj-gravity').value = 9.8;
     document.getElementById('proj-gravity-val').textContent = '9.8 m/s²';
+    isUpdating = false;
 
     document.getElementById('proj-drag').value = 0.05;
     document.getElementById('proj-drag-val').textContent = '0.05';
@@ -765,8 +827,10 @@ function resetPhysicsModule() {
     document.getElementById('pend-mass').value = 2.0;
     document.getElementById('pend-mass-val').textContent = '2.0 kg';
 
+    isUpdating = true;
     document.getElementById('pend-gravity').value = 9.8;
     document.getElementById('pend-gravity-val').textContent = '9.8 m/s²';
+    isUpdating = false;
 
     document.getElementById('pend-damping').value = 0.05;
     document.getElementById('pend-damping-val').textContent = '0.05';

@@ -235,30 +235,51 @@ function initChemistryModule() {
 
 function resizeChemistryCanvases() {
     if (!bohrCanvas) return;
+
     const bRect = bohrCanvas.parentElement.getBoundingClientRect();
-    bohrCanvas.width = bRect.width;
-    bohrCanvas.height = bRect.height;
+    const bw = Math.floor(bRect.width);
+    const bh = Math.floor(bRect.height);
+    if (bohrCanvas.width !== bw || bohrCanvas.height !== bh) {
+        bohrCanvas.width = bw;
+        bohrCanvas.height = bh;
+    }
 
     const mRect = moleculeCanvas.parentElement.getBoundingClientRect();
-    moleculeCanvas.width = mRect.width;
-    moleculeCanvas.height = mRect.height;
+    const mw = Math.floor(mRect.width);
+    const mh = Math.floor(mRect.height);
+    if (moleculeCanvas.width !== mw || moleculeCanvas.height !== mh) {
+        moleculeCanvas.width = mw;
+        moleculeCanvas.height = mh;
+    }
 
     if (molecule3dCanvas) {
         const dRect = molecule3dCanvas.parentElement.getBoundingClientRect();
-        molecule3dCanvas.width = dRect.width;
-        molecule3dCanvas.height = dRect.height;
+        const dw = Math.floor(dRect.width);
+        const dh = Math.floor(dRect.height);
+        if (molecule3dCanvas.width !== dw || molecule3dCanvas.height !== dh) {
+            molecule3dCanvas.width = dw;
+            molecule3dCanvas.height = dh;
+        }
     }
 
     if (titrationCanvas) {
         const tRect = titrationCanvas.parentElement.getBoundingClientRect();
-        titrationCanvas.width = tRect.width;
-        titrationCanvas.height = tRect.height;
+        const tw = Math.floor(tRect.width);
+        const th = Math.floor(tRect.height);
+        if (titrationCanvas.width !== tw || titrationCanvas.height !== th) {
+            titrationCanvas.width = tw;
+            titrationCanvas.height = th;
+        }
     }
 
     if (flameCanvas) {
         const fRect = flameCanvas.parentElement.getBoundingClientRect();
-        flameCanvas.width = fRect.width;
-        flameCanvas.height = fRect.height;
+        const fw = Math.floor(fRect.width);
+        const fh = Math.floor(fRect.height);
+        if (flameCanvas.width !== fw || flameCanvas.height !== fh) {
+            flameCanvas.width = fw;
+            flameCanvas.height = fh;
+        }
     }
 }
 

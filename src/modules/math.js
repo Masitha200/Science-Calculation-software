@@ -393,29 +393,49 @@ function resizeMathCanvases() {
     if (!mathCanvas) return;
 
     const mathRect = mathCanvas.parentElement.getBoundingClientRect();
-    mathCanvas.width = mathRect.width;
-    mathCanvas.height = mathRect.height;
+    const mathW = Math.floor(mathRect.width);
+    const mathH = Math.floor(mathRect.height);
+    if (mathCanvas.width !== mathW || mathCanvas.height !== mathH) {
+        mathCanvas.width = mathW;
+        mathCanvas.height = mathH;
+    }
 
     const matRect = matrixCanvas.parentElement.getBoundingClientRect();
-    matrixCanvas.width = matRect.width;
-    matrixCanvas.height = matRect.height;
+    const matW = Math.floor(matRect.width);
+    const matH = Math.floor(matRect.height);
+    if (matrixCanvas.width !== matW || matrixCanvas.height !== matH) {
+        matrixCanvas.width = matW;
+        matrixCanvas.height = matH;
+    }
 
     if (vectorCanvas) {
         const vecRect = vectorCanvas.parentElement.getBoundingClientRect();
-        vectorCanvas.width = vecRect.width;
-        vectorCanvas.height = vecRect.height;
+        const vecW = Math.floor(vecRect.width);
+        const vecH = Math.floor(vecRect.height);
+        if (vectorCanvas.width !== vecW || vectorCanvas.height !== vecH) {
+            vectorCanvas.width = vecW;
+            vectorCanvas.height = vecH;
+        }
     }
 
     if (fourierCanvas) {
         const fourierRect = fourierCanvas.parentElement.getBoundingClientRect();
-        fourierCanvas.width = fourierRect.width;
-        fourierCanvas.height = fourierRect.height;
+        const fourierW = Math.floor(fourierRect.width);
+        const fourierH = Math.floor(fourierRect.height);
+        if (fourierCanvas.width !== fourierW || fourierCanvas.height !== fourierH) {
+            fourierCanvas.width = fourierW;
+            fourierCanvas.height = fourierH;
+        }
     }
 
     if (galtonCanvas) {
         const galtonRect = galtonCanvas.parentElement.getBoundingClientRect();
-        galtonCanvas.width = galtonRect.width;
-        galtonCanvas.height = galtonRect.height;
+        const galtonW = Math.floor(galtonRect.width);
+        const galtonH = Math.floor(galtonRect.height);
+        if (galtonCanvas.width !== galtonW || galtonCanvas.height !== galtonH) {
+            galtonCanvas.width = galtonW;
+            galtonCanvas.height = galtonH;
+        }
     }
 }
 

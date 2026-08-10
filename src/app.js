@@ -62,8 +62,12 @@ function initParticles() {
 function resizeParticleCanvas() {
     if (!particleCanvas) return;
     const rect = particleCanvas.parentElement.getBoundingClientRect();
-    particleCanvas.width = rect.width;
-    particleCanvas.height = rect.height;
+    const newWidth = Math.floor(rect.width);
+    const newHeight = Math.floor(rect.height);
+    if (particleCanvas.width !== newWidth || particleCanvas.height !== newHeight) {
+        particleCanvas.width = newWidth;
+        particleCanvas.height = newHeight;
+    }
 }
 
 function animateParticles() {
